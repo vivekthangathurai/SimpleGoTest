@@ -8,3 +8,16 @@ steps:
   commands:
   - go build
   - go test
+
+- name: build image
+  image: docker:latest
+  commands:
+    - docker build --no-cache -t simplego:1.0.0 -f Dockerfile .
+  volumes:
+    - name: docker_sock
+      path: /var/run/docker.sock
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
