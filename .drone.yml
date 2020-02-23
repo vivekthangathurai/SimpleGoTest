@@ -8,3 +8,17 @@ steps:
   commands:
   - go build
   - go test
+
+- name: docker
+  image: plugins/docker
+  settings:
+    repo: vivek125/simplego
+    registry: docker.io
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    auto_tag: true
+    when:
+      branch: master
+
