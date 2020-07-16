@@ -15,5 +15,5 @@ spec:
               revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}"
       container:
         image: golang:1.14
-        command: ["go", "install", "./..." ]
+        command: ["go", "install", "." ]
         workingDir: /src
