@@ -18,4 +18,3 @@ spec:
         image: golang:1.14
         command: ["go", "test", "." ]
         workingDir: /src
-        
