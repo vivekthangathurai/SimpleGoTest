@@ -11,7 +11,7 @@ spec:
           - name: source
             path: /src
             git:
-              repo: "{{workflow.annotations.k8s-webhook-handler.io/repo_ssh}}"
+              repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
               revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}"
       container:
         image: golang:1.14
