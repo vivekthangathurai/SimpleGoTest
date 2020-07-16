@@ -17,7 +17,3 @@ spec:
         image: golang:1.14
         command: ["go", "install", "./..." ]
         workingDir: /src
-      outputs:
-        artifacts:
-          - name: binaries
-            path: /go/bin
