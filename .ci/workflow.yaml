@@ -4,6 +4,7 @@ metadata:
   generateName: ci-k8s-webhook-handler-
 spec:
   entrypoint: build
+  serviceAccountName: k8s-webhook-handler
   templates:
     - name: build
       inputs:
