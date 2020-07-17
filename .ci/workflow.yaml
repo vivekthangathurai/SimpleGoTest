@@ -38,4 +38,15 @@ spec:
           - "--destination={{workflow.parameters.image}}"
         volumeMounts:
           - name: docker-config
-            mountPath: /kaniko/.docker/        
+            mountPath: /kaniko/.docker/   
+    - name: deploy
+      inputs:
+        artifacts:
+          - name: source
+            path: /src
+            git:
+              repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
+              revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}" 
+      container:
+        image: bitnami/kubectl:1.17.4
+        args: ["kubectl", "apply", "-f", "configmap.yaml"]        
