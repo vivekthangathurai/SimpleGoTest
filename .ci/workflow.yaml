@@ -20,6 +20,9 @@ spec:
         tasks:
           - name: build
             template: build
+          - name: deploy
+            template: deploy
+            dependencies: [build]  
     - name: build
       metadata:
         annotations:
