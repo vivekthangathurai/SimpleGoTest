@@ -49,4 +49,4 @@ spec:
               revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}" 
       container:
         image: bitnami/kubectl:1.17.4
-        args: ["kubectl", "apply", "-f", "configmap.yaml","-n","argo"]        
+        args: ["kubectl", "apply", "-f", "src/configmap.yaml","-n","argo"]        
