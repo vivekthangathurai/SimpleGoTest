@@ -3,10 +3,26 @@ kind: Workflow
 metadata:
   generateName: ci-k8s-webhook-handler-
 spec:
-  entrypoint: build
+  entrypoint: ci
   serviceAccountName: k8s-webhook-handler
+  arguments:
+    parameters:
+      - name: image
+        value: "vivek125/k8s-webhook-handler:{{workflow.annotations.k8s-webhook-handler.io/revision}}"
+  volumes:
+    - name: docker-config
+      configMap:
+        name: docker-config
   templates:
+    - name: ci
+      dag:
+        tasks:
+          - name: build
+            template: build
     - name: build
+      metadata:
+        annotations:
+          iam.amazonaws.com/role: ci-role
       inputs:
         artifacts:
           - name: source
@@ -15,6 +31,10 @@ spec:
               repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
               revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}"
       container:
-        image: golang:1.14
-        command: ["go", "test", "." ]
-        workingDir: /src
+        image: gcr.io/kaniko-project/executor
+        args:
+          - "--context=/src"
+          - "--destination={{workflow.parameters.image}}"
+        volumeMounts:
+          - name: docker-config
+            mountPath: /kaniko/.docker/        
