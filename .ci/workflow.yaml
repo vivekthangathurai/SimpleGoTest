@@ -12,7 +12,8 @@ spec:
   volumes:
     - name: docker-config
       configMap:
-        name: docker-config      
+        name: docker-config  
+        
   templates:
     - name: ci
       dag:
