@@ -44,13 +44,18 @@ spec:
              revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}"
       outputs:
         artifacts:
-          - name: source
-            path: /src
-      container:
-        image: golang:1.9.2
-        command: ["/bin/sh", "-c"]
-        args: ["cd /src && git status && ls -l"]          
-            
+           - name: source
+             path: /src
+             gcs:
+               bucket: argo_artifact_appdirect
+               key: test
+             serviceAccountKeySecret:
+               name: my-gcs-bucket-secret
+               key: serviceAccountKey
+             container:
+               image: golang:1.9.2
+               command: ["/bin/sh", "-c"]
+               args: ["cd /src && git status && ls -l"]                     
     - name: build
       metadata:
         annotations:
