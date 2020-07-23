@@ -19,11 +19,38 @@ spec:
     - name: ci
       dag:
         tasks:
+          - name: checkout
+            template: checkout
           - name: build
             template: build
+            arguments:
+              artifacts:
+              - name: source
+                from: "{{steps.checkout.outputs.artifacts.source}}"
           - name: deploy
             template: deploy
-            dependencies: [build]  
+            arguments:
+              artifacts:
+              - name: source
+                from: "{{steps.checkout.outputs.artifacts.source}}"
+            dependencies: [build]
+    - name: checkout
+      inputs:
+        artifacts:
+          - name: source
+            path: /src
+            git:
+             repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
+             revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}"
+      outputs:
+        artifacts:
+          - name: source
+            path: /src
+      container:
+        image: golang:1.9.2
+        command: ["/bin/sh", "-c"]
+        args: ["cd /src && git status && ls -l"]          
+            
     - name: build
       metadata:
         annotations:
@@ -32,9 +59,6 @@ spec:
         artifacts:
           - name: source
             path: /src
-            git:
-              repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
-              revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}"
       container:
         image: gcr.io/kaniko-project/executor
         args:
@@ -48,9 +72,6 @@ spec:
         artifacts:
           - name: source
             path: /src
-            git:
-              repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
-              revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}" 
       container:
         image: bitnami/kubectl:latest
         args: ["apply", "-f", "src/configmap.yaml","-n","argo"]
@@ -59,9 +80,6 @@ spec:
         artifacts:
           - name: source
             path: /src
-            git:
-              repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
-              revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}" 
       container:
         image: bitnami/kubectl:latest
         args: ["delete", "-f", "src/configmap.yaml","-n","argo"]    
