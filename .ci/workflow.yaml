@@ -26,13 +26,13 @@ spec:
             arguments:
               artifacts:
               - name: source
-                from: "{{steps.checkout.outputs.artifacts.source}}"
+                from: "{{dag.tasks.checkout.outputs.artifacts.source}}"
           - name: deploy
             template: deploy
             arguments:
               artifacts:
               - name: source
-                from: "{{steps.checkout.outputs.artifacts.source}}"
+                from: "{{dag.tasks.checkout.outputs.artifacts.source}}"
             dependencies: [build]
     - name: checkout
       inputs:
