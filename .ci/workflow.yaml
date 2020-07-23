@@ -52,10 +52,10 @@ spec:
             serviceAccountKeySecret:
               name: my-gcs-bucket-secret
               key: serviceAccountKey
-            container:
-              image: golang:1.9.2
-              command: ["/bin/sh", "-c"]
-              args: ["cd /src && git status && ls -l"]                     
+      container:
+         image: golang:1.9.2
+         command: ["/bin/sh", "-c"]
+         args: ["cd /src && git status && ls -l"]                     
     - name: build
       metadata:
         annotations:
