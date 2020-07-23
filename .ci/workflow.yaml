@@ -19,14 +19,14 @@ spec:
     - name: ci
       dag:
         tasks:
-          - name: checkout
-            template: checkout
-          - name: build
-            template: build
-            arguments:
-              artifacts:
-              - name: source
-                from: "{{dag.tasks.checkout.outputs.artifacts.source}}"
+          - - name: checkout
+              template: checkout
+          - - name: build
+              template: build
+              arguments:
+                artifacts:
+                - name: source
+                  from: "{{dag.tasks.checkout.outputs.artifacts.source}}"
           - name: deploy
             template: deploy
             arguments:
