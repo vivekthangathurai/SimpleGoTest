@@ -34,12 +34,6 @@ spec:
               - name: source
                 from: "{{dag.tasks.checkout.outputs.artifacts.source}}"
             dependencies: [build]
-          - name: exit-handler
-            template: exit-handler
-            arguments:
-              artifacts:
-              - name: source
-                from: "{{dag.tasks.checkout.outputs.artifacts.source}}"  
     - name: checkout
       inputs:
         artifacts:
@@ -82,10 +76,7 @@ spec:
         image: bitnami/kubectl:latest
         args: ["apply", "-f", "src/configmap.yaml","-n","argo"]
     - name: exit-handler
-      inputs:
-        artifacts:
-          - name: source
-            path: /src
       container:
-        image: bitnami/kubectl:latest
-        args: ["delete", "-f", "src/configmap.yaml","-n","argo"]    
+        image: alpine:latest
+        command: [sh, -c]
+        args: ["echo hooray!"]    
