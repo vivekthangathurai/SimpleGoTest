@@ -34,6 +34,12 @@ spec:
               - name: source
                 from: "{{dag.tasks.checkout.outputs.artifacts.source}}"
             dependencies: [build]
+          - name: exit-handler
+            template: exit-handler
+            arguments:
+              artifacts:
+              - name: source
+                from: "{{dag.tasks.checkout.outputs.artifacts.source}}"  
     - name: checkout
       inputs:
         artifacts:
