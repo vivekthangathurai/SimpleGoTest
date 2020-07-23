@@ -49,7 +49,7 @@ spec:
             path: /src
             gcs:
               bucket: argo_artifacts_appdirect
-              key: /test
+              key: /test/test1
             serviceAccountKeySecret:
               name: my-gcs-bucket-secret
               key: serviceAccountKey
