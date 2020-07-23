@@ -9,6 +9,7 @@ spec:
     parameters:
       - name: image
         value: "vivek125/k8s-webhook-handler:{{workflow.annotations.k8s-webhook-handler.io/revision}}"
+        
   volumes:
     - name: docker-config
       configMap:
