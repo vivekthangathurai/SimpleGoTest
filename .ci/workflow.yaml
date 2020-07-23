@@ -4,12 +4,12 @@ metadata:
   generateName: ci-k8s-webhook-handler-
 spec:
   entrypoint: ci
+  onExit: exit-handler
   serviceAccountName: k8s-webhook-handler
   arguments:
     parameters:
       - name: image
-        value: "vivek125/k8s-webhook-handler:{{workflow.annotations.k8s-webhook-handler.io/revision}}"
-        
+        value: "vivek125/k8s-webhook-handler:{{workflow.annotations.k8s-webhook-handler.io/revision}}"      
   volumes:
     - name: docker-config
       configMap:
@@ -52,4 +52,15 @@ spec:
               revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}" 
       container:
         image: bitnami/kubectl:latest
-        args: ["apply", "-f", "src/configmap.yaml","-n","argo"]        
+        args: ["apply", "-f", "src/configmap.yaml","-n","argo"]
+    - name: exit-handler
+      inputs:
+        artifacts:
+          - name: source
+            path: /src
+            git:
+              repo: "https://github.com/vivekthangathurai/SimpleGoTest.git"
+              revision: "{{workflow.annotations.k8s-webhook-handler.io/revision}}" 
+      container:
+        image: bitnami/kubectl:latest
+        args: ["delete", "-f", "src/configmap.yaml","-n","argo"]    
