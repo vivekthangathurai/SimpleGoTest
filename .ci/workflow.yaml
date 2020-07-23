@@ -52,7 +52,7 @@ spec:
               key: /test/test1
             serviceAccountKeySecret:
               name: my-gcs-bucket-secret
-              key: serviceAccountKey
+              key: private-key
       container:
          image: golang:1.9.2
          command: ["/bin/sh", "-c"]
