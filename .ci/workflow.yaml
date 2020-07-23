@@ -48,7 +48,7 @@ spec:
           - name: source
             path: /src
             gcs:
-              bucket: argo_artifact_appdirect
+              bucket: argo_artifacts_appdirect
               key: test
             serviceAccountKeySecret:
               name: my-gcs-bucket-secret
