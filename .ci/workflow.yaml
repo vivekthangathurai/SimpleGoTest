@@ -6,7 +6,6 @@ spec:
   entrypoint: ci
   onExit: exit-handler
   serviceAccountName: k8s-webhook-handler
-  
   arguments:
     parameters:
       - name: image
