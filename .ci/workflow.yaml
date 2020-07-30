@@ -3,6 +3,7 @@ kind: Workflow
 metadata:
   generateName: ci-k8s-webhook-handler-
 spec:
+
   entrypoint: ci
   onExit: exit-handler
   serviceAccountName: k8s-webhook-handler
