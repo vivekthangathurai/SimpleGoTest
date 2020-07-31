@@ -1,2 +1,2 @@
 # SimpleGo
-test drone
+hello there test this drone for plugins
